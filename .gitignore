@@ -4,5 +4,6 @@
 *.swp
 cscope.*
 backup/
+data/
 old/
 log/

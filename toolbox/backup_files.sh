@@ -4,16 +4,14 @@
 
 # args
 # $1: target path
-# $2: file list
+# $2: a list file
 
-if [[ $# < 2 ]]; then
+if [[ $# -lt 2 ]]; then
 	echo ">>> Invalid arg! require: ..."
 	echo ">>> arg 1: target path"
 	echo ">>> arg 2: file list"
 	exit
 fi
 
-P=$1
-shift
-tar -czpPvf $P.tar.gz $*
+tar -czpPvf $1.tar.gz -T $2
 

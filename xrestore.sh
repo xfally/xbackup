@@ -29,7 +29,7 @@ EOF
 # am i root?
 who=$(whoami)
 echo ">>> whoami: $who"
-if [[ ! "x$who" == "xroot" ]]; then
+if [[ "$who" != "root" ]]; then
 	echo ">>> Require root permission! Use sudo or su to obtain."
 	exit
 fi
@@ -60,7 +60,7 @@ LOG_DIR="${P}/log"
 
 mkdir -p ${LOG_DIR}
 
-echo ">>> restore path: ${DATA_DIR}"
+echo ">>> data path: ${DATA_DIR}"
 echo ">>> log path: ${LOG_DIR}"
 
 . ./toolbox/utils.sh

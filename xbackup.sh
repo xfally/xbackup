@@ -12,7 +12,7 @@ function notice() {
 Notice:
   1. Modify me at first, to make your OS happy!
   2. Do NOT need root or sudo, and anyone can backup his files.
-  3. Backup files will be saved under "${BACKUP_DIR}".
+  3. Backup files (listed in "${DATA_DIR}/backup_*.list") will be saved under "${BACKUP_DIR}".
 ########################################################################
 EOF
 }
@@ -21,7 +21,8 @@ function usage() {
 	cat <<EOF
 Usage: xbackup.sh [OPTIONS]...
   OPTIONS:
-  -d BACKUP_DIR            absolute backup dir (default ${P}/backup)
+  -b BACKUP_DIR            absolute backup dir (default ${P}/backup)
+  -d DATA_DIR              absolute data dir (default ${P}/data)
 EOF
 	exit
 }
@@ -36,10 +37,11 @@ echo ">>> project path: ${P}"
 
 cd $P
 
-while getopts "d:" OPTION
+while getopts "b:d:" OPTION
 do
 	case $OPTION in
-		d ) BACKUP_DIR="$OPTARG";;
+		b ) BACKUP_DIR="$OPTARG";;
+		d ) DATA_DIR="$OPTARG";;
 		* ) usage
 	esac
 done
@@ -49,12 +51,17 @@ if [ -z "$BACKUP_DIR" ]; then
 	#BACKUP_DIR="${HOME}/backup"  # Use `${HOME}` instead of `~`!
 fi
 
+if [ -z "$DATA_DIR" ]; then
+	DATA_DIR="${P}/data"
+fi
+
 LOG_DIR="${P}/log"
 
 mkdir -p ${BACKUP_DIR}
 mkdir -p ${LOG_DIR}
 
 echo ">>> backup path: ${BACKUP_DIR}"
+echo ">>> data path: ${DATA_DIR}"
 echo ">>> log path: ${LOG_DIR}"
 
 . ./toolbox/utils.sh
@@ -65,36 +72,20 @@ function main() {
 
 	echo "### step 1. backup system config"
 	give_me_a_chance || exit
-	list="/etc/fstab \
-		/etc/default/locale \
-		/etc/apt/sources.list"
-	#echo "list: $list"
-	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_system_config_${T} "$list"
+	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_system_config_${T} ${DATA_DIR}/backup_system_config.list
 	echo "### step 1. over..."
 
 	echo "### step 2. backup user config"
 	give_me_a_chance || exit
-	list="${HOME}/.bashrc \
-		${HOME}/.config/chromium/Default/Bookmarks \
-		${HOME}/.editorconfig \
-		${HOME}/.gitconfig \
-		${HOME}/.gitignore \
-		${HOME}/.npmrc \
-		${HOME}/.profile \
-		${HOME}/.vimrc \
-		${HOME}/.ssh"
-	#echo "list: $list"
-	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_home_config_${T} "$list"
+	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_home_config_${T} ${DATA_DIR}/backup_home_config.list
 	echo "### step 2. over..."
 
-	echo "### step 3. backup bin, such as ~/bin..."
+	echo "### step 3. backup user bin"
 	give_me_a_chance || exit
-	list="${HOME}/bin"
-	#echo "list: $list"
-	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_home_bin_${T} "$list"
+	./toolbox/backup_files.sh ${BACKUP_DIR}/${H}_home_bin_${T} ${DATA_DIR}/backup_home_bin.list
 	echo "### step 3. over..."
 
-	echo "### step 4. backup install packages list..."
+	echo "### step 4. backup installed packages list"
 	give_me_a_chance || exit
 	./toolbox/backup_packages_list.sh ${BACKUP_DIR}/${H}_packages_list_${T}
 	echo "### step 4. over..."

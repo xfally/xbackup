@@ -6,7 +6,7 @@
 # arg example 1: 'static', card, ip, netmask, default gateway, nameserver
 # arg example 2: 'dhcp', card
 
-if [[ $# != 6 && $# != 2 ]]; then
+if [[ $# -ne 6 && $# -ne 2 ]]; then
 	echo ">>> Invalid arg! require: ..."
 	echo ">>> arg example 1: 'static', card, ip, netmask, default gateway, nameserver"
 	echo ">>> arg example 2: 'dhcp', card"
@@ -16,7 +16,7 @@ fi
 ifconfig $2 down
 mkdir -p old
 mv /etc/network/interfaces ./old/interfaces.$(date +"%Y%m%d%H%M%S")
-if [[ $1 = 'static' ]]; then
+if [[ $1 == 'static' ]]; then
 	#ifconfig $2 $3 netmask $4
 	##ifconfig $2 hw ether XX:XX:XX:XX:XX:XX
 	#route add default gw $5
