@@ -1,19 +1,21 @@
 #!/bin/bash
 
-########################################################################
-# The script-toolbox is created to backup and restore your Debian/Ubuntu OS (64bits).
-# This is the **restore** script which invokes needed child scripts to complete the restore work.
+######################################################################
+# The script toolbox is created to backup and restore your
+# Debian/Ubuntu OS (64bits).
+# This is the **restore** script which invokes needed child scripts to
+# complete the restore work.
 # by pax (coolwinding@gmail.com) 150122
-########################################################################
+######################################################################
 
 function notice() {
 	cat <<EOF
-########################################################################
+######################################################################
 Notice:
   1. Modify me at first, to make your OS happy!
   2. Use root or sudo to run me, or some step will fail!
-  3. Restore from "${DATA_DIR}", and original os files will be saved under "${P}/old/".
-########################################################################
+  3. Restore from "${DATA_DIR}", and original files will be saved under "${P}/old/".
+######################################################################
 EOF
 }
 
@@ -21,7 +23,7 @@ function usage() {
 	cat <<EOF
 Usage: xrestore.sh [OPTIONS]...
   OPTIONS:
-  -d DATA_DIR               absolute data dir (default ${P}/data)
+  -d DATA_DIR               absolute data dir (default ${P}/data). Put the files you want to restore here at first.
 EOF
 	exit
 }
@@ -61,7 +63,6 @@ LOG_DIR="${P}/log"
 mkdir -p ${LOG_DIR}
 
 echo ">>> data path: ${DATA_DIR}"
-echo ">>> log path: ${LOG_DIR}"
 
 . ./toolbox/utils.sh
 
@@ -93,17 +94,23 @@ function main() {
 
 	echo "### step 5. install packages..."
 	give_me_a_chance || exit
-	./toolbox/install_packages.sh "${DATA_DIR}/packages.list"
+	./toolbox/install_packages.sh "${DATA_DIR}/packages"
 	echo "### step 5. over..."
 
-	echo "### step 6. do some other settings..."
+	echo "### step 6. configure dconf..."
+	give_me_a_chance || exit
+	./toolbox/configure_dconf.sh "${DATA_DIR}/dconf"
+	echo "### step 6. over..."
+
+	echo "### step 7. do some other settings..."
 	give_me_a_chance || exit
 	echo "symlink sh to bash"
 	ln -sf /bin/bash /bin/sh
-	echo "### step 6. over..."
+	echo "### step 7. over..."
 
 	echo ">>>>>> All done! maybe you should restart your OS now"
 }
 
 main 2>&1 | tee ${LOG_DIR}/restore_${H}_${T}.log
 
+echo ">>> log path: ${LOG_DIR}"

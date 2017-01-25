@@ -3,10 +3,10 @@
 # by pax (coolwinding@gmail.com) 150121
 
 # args
-# $1: sources.list path
+# $1: sources.list backup file
 
 if [[ ! -f $1 ]]; then
-	echo ">>> Invalid arg! require: sources.list path"
+	echo ">>> Invalid arg! require: sources.list backup file"
 	exit
 fi
 

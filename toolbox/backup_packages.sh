@@ -1,0 +1,29 @@
+#!/bin/bash
+# Backup installed packages
+# by pax (coolwinding@gmail.com) 150121
+
+# args
+# $1: target path
+
+if [[ -z $1 ]]; then
+	echo ">>> Invalid arg! require: target path"
+	exit
+fi
+
+#aptitude search '~i!~M'
+
+P=$1
+D=$(dirname $P)
+F=$(basename $P)
+
+(dpkg --get-selections && echo "") | grep -v deinstall | sed -e ':a;N;s/install\n//;ta' | sed -e 's/\t/ /g' | tr -s ' ' > $D/packages
+
+if [[ $SILENT_MODE -eq 1 ]]; then
+	V=;
+else
+	cat $D/packages
+	V=-v
+fi
+
+cd $D && tar $V -czpf $F.tar.gz packages && rm packages && cd - > /dev/null
+

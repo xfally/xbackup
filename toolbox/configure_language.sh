@@ -3,10 +3,10 @@
 # by pax (coolwinding@gmail.com) 150122
 
 # args
-# $1: locale path
+# $1: locale backup file
 
 if [[ ! -f $1 ]]; then
-	echo ">>> Invalid arg! require: locale path"
+	echo ">>> Invalid arg! require: locale backup file"
 	exit
 fi
 

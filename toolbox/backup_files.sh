@@ -4,14 +4,20 @@
 
 # args
 # $1: target path
-# $2: a list file
+# $2: backup files list
 
 if [[ $# -lt 2 ]]; then
 	echo ">>> Invalid arg! require: ..."
 	echo ">>> arg 1: target path"
-	echo ">>> arg 2: file list"
+	echo ">>> arg 2: backup files list"
 	exit
 fi
 
-tar -czpPvf $1.tar.gz -T $2
+if [[ $SILENT_MODE -eq 1 ]]; then
+	V=;
+else
+	V=-v
+fi
+
+tar $V -czpPf $1.tar.gz -T $2
 

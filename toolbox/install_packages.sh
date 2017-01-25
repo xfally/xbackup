@@ -1,13 +1,13 @@
 #!/bin/bash
 # Install packages
-# Tip: use backup_packages_list.sh to generate the packages.list file
+# Tip: use backup_packages.sh to generate the packages list file
 # by pax (coolwinding@gmail.com) 150122
 
 # args
-# $1: packages.list path
+# $1: packages list backup file
 
 if [[ ! -f $1 ]]; then
-	echo ">>> Invalid arg! require: packages.list path"
+	echo ">>> Invalid arg! require: packages list backup file"
 	exit
 fi
 
