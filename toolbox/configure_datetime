@@ -15,4 +15,3 @@ dpkg-reconfigure tzdata -u
 hwclock --localtime --hctosys
 hwclock --systohc
 #date; hwclock --show
-

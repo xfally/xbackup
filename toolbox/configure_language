@@ -1,0 +1,14 @@
+#!/bin/bash
+# Configure system language and locale
+# by pax (coolwinding@gmail.com) 150122
+
+# args
+# $1: locale value, e.g. "en_US.UTF-8"
+
+if [[ -z $1 ]]; then
+	echo ">>> Invalid arg! require: locale value, e.g. \"en_US.UTF-8\""
+	exit
+fi
+
+update-locale LANG=$1 LANGUAGE
+#locale-gen en_US.UTF-8

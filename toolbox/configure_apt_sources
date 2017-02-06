@@ -17,4 +17,3 @@ chmod 644 /etc/apt/sources.list
 # update or upgrade existed packages
 apt-get update -y
 apt-get upgrade -y
-

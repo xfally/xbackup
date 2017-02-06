@@ -4,7 +4,9 @@
 
 # args
 # arg example 1: 'static', card, ip, netmask, default gateway, nameserver
+#                'static' 'eth0' '172.28.130.51' '255.255.255.0' '172.28.130.1' '172.31.1.1'
 # arg example 2: 'dhcp', card
+#                'dhcp' 'eth0'
 
 if [[ $# -ne 6 && $# -ne 2 ]]; then
 	echo ">>> Invalid arg! require: ..."

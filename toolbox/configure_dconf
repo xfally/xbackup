@@ -13,4 +13,3 @@ fi
 mkdir -p old
 dconf dump / > ./old/dconf.$(date +"%Y%m%d%H%M%S")
 cat $1 | dconf load /
-

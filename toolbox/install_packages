@@ -1,6 +1,6 @@
 #!/bin/bash
 # Install packages
-# Tip: use backup_packages.sh to generate the packages list file
+# Tip: use backup_packages to generate the packages list file
 # by pax (coolwinding@gmail.com) 150122
 
 # args
@@ -13,5 +13,4 @@ fi
 
 apt-get -y -s install `cat $1`
 #apt-get -y install `cat $1`
-echo ">>> if some packages can not be found, please check your apt sources, or maybe you should install them by hand"
-
+echo ">>> If some packages can not be found, please check your apt sources, or maybe you should install them by hand"

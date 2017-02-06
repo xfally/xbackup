@@ -25,5 +25,7 @@ else
 	V=-v
 fi
 
-cd $D && tar $V -czpf $F.tar.gz packages && rm packages && cd - > /dev/null
-
+cd $D
+tar $V -czpf $F.tar.gz packages
+rm packages
+cd - > /dev/null

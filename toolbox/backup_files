@@ -1,0 +1,43 @@
+#!/bin/bash
+# Backup all needed files
+# by pax (coolwinding@gmail.com) 150121
+
+# args
+# $1: target path
+# $2: backup files list
+
+if [[ $# -lt 2 ]]; then
+	echo ">>> Invalid arg! require: ..."
+	echo ">>> arg 1: target path"
+	echo ">>> arg 2: backup files list"
+	exit
+fi
+
+P=$1
+D=$(dirname $P)
+F=$(basename $P)
+
+P2=$2
+D2=$(dirname $P2)
+F2=$(basename $P2)
+
+if [[ $SILENT_MODE -eq 1 ]]; then
+	V=;
+else
+	V=-v
+fi
+
+cd $D
+cp -f $P2 $D
+# backup files
+tar $V -cpPf $F.tar -T $F2
+# backup list file
+tar $V -rpf $F.tar $F2
+# append tar files to an archive
+tar $V -Af $F.tar.gz $F.tar
+# clean
+rm $F2
+rm $F.tar
+cd - > /dev/null
+
+echo ">>> If you want to backup (preserve) file permissions, use root or sudo to run me."
