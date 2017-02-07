@@ -1,14 +1,16 @@
 # xbackup
 
-This script toolbox is created to backup/restore files/config on Debian/Ubuntu OS.
+**xbackup**, **xrestore** and its child scripts are created to backup/restore files/config on Debian/Ubuntu OS.
+
+Run `xbackup -h` and `xrestore -h` for usage.
 
 The toolbox contains
 
 - backup*: Backup system/user packages, dconf, files, bins...
-- restore*, install*, configure*: Restore system/user packages, dconf, files, bins...
+- restore, install, configure*: Restore system/user packages, dconf, files, bins...
 - other utils
 
-The backup_files.list format
+The *backup_files.list* likes below
 
 ```
 /etc/apt/sources.list
@@ -26,5 +28,11 @@ The backup_files.list format
 Unhappily, when restore, the script will not choose the newest backup file,
 but you should copy the wanted backup file from backup dir to data dir.
 Refer to restore* script for more detail.
+
+**xrsync** is created to synchronize files from one place to another.
+
+Run `xrsync -h` for usage.
+
+If xrsync uses arg `-F`, you can specify one list file. The fomate likes *backup_files.list* above.
 
 License: [MIT](https://github.com/xfally/xbackup/blob/master/LICENSE)
