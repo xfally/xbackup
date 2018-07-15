@@ -15,8 +15,7 @@ function notice() {
 **********************************************************************
 Notice:
   1. Modify me at first, to make your OS happy!
-  2. Do NOT need root or sudo, and anyone can backup his files.
-  3. Backup files will be saved under "${BACKUP_DIR}".
+  2. Backup files will be saved under "${BACKUP_DIR}".
 **********************************************************************
 EOF
 }
@@ -25,13 +24,16 @@ function usage() {
 	cat <<EOF
 Usage: xbackup [OPTIONS]...
   OPTIONS:
-  -b BACKUP_DIR            absolute backup dir (default ${P}/backup). All backup files/configs will be saved here.
-  -d DATA_DIR              absolute data dir (default ${P}/data). Put your backup_files.list here.
-  -s                       silent mode. Suppress verboss output in console.
+  -b BACKUP_DIR            Absolute backup dir (default ${P}/backup).
+                             All backup files/configs will be saved here.
+  -d DATA_DIR              Absolute data dir (default ${P}/data).
+                             Put your backup_files.list here.
+  -s                       Silent mode.
+                             Suppress verboss output in console.
 
 Example:
-  1. xbackup -b /media/pax/usb_device/backup
-     This will backup all files or configs to one usb device's "backup" dir (created if not exist).
+  xbackup -b /media/pax/usb_device/backup
+    This will backup all files or configs to one usb device's "backup" dir (created if not exist).
 EOF
 	exit
 }

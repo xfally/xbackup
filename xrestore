@@ -15,8 +15,7 @@ function notice() {
 **********************************************************************
 Notice:
   1. Modify me at first, to make your OS happy!
-  2. Use root or sudo to run me, or some step will fail!
-  3. Restore from "${DATA_DIR}", and original files will be saved under "${P}/old/".
+  2. Restore from "${DATA_DIR}", and original files will be saved under "${P}/old/".
 **********************************************************************
 EOF
 }
@@ -25,7 +24,8 @@ function usage() {
 	cat <<EOF
 Usage: xrestore [OPTIONS]...
   OPTIONS:
-  -d DATA_DIR               absolute data dir (default ${P}/data). Put the files you want to restore here at first.
+  -d DATA_DIR               Absolute data dir (default ${P}/data).
+                              Put the files you want to restore here at first.
 EOF
 	exit
 }
@@ -66,29 +66,29 @@ function main() {
 
 	echo "### step 1. configure network..."
 	give_me_a_chance || exit
-	#./toolbox/configure_network 'static' 'eth0' '172.28.130.51' '255.255.255.0' '172.28.130.1' '172.31.1.1'
+	#sudo ./toolbox/configure_network 'static' 'eth0' '172.28.130.51' '255.255.255.0' '172.28.130.1' '172.31.1.1'
 	echo "skip it now! you can invoke it by hand"
 	echo "### step 1. over..."
 
 	echo "### step 2. configure language and locale..."
 	give_me_a_chance || exit
-	./toolbox/configure_language "en_US.UTF-8"
+	sudo ./toolbox/configure_language "en_US.UTF-8"
 	echo "### step 2. over..."
 
 	echo "### step 3. configure date and time..."
 	give_me_a_chance || exit
-	#./toolbox/configure_datetime '172.31.1.1'
+	#sudo ./toolbox/configure_datetime '172.31.1.1'
 	echo "skip it now! you can invoke it by hand"
 	echo "### step 3. over..."
 
 	echo "### step 4. configure apt source..."
 	give_me_a_chance || exit
-	./toolbox/configure_apt_sources "${DATA_DIR}/sources.list"
+	sudo ./toolbox/configure_apt_sources "${DATA_DIR}/sources.list"
 	echo "### step 4. over..."
 
 	echo "### step 5. install packages..."
 	give_me_a_chance || exit
-	./toolbox/install_packages "${DATA_DIR}/packages"
+	sudo ./toolbox/install_packages "${DATA_DIR}/packages"
 	echo "### step 5. over..."
 
 	echo "### step 6. configure dconf..."
@@ -99,7 +99,7 @@ function main() {
 	echo "### step 7. do some other settings..."
 	give_me_a_chance || exit
 	echo "symlink sh to bash"
-	ln -sf /bin/bash /bin/sh
+	sudo ln -sf /bin/bash /bin/sh
 	echo "### step 7. over..."
 
 	echo ">>>>>> All done! maybe you should restart your OS now"
@@ -108,10 +108,6 @@ function main() {
 # am i root?
 who=$(whoami)
 echo ">>> whoami: $who"
-if [[ "$who" != "root" ]]; then
-	echo ">>> Require root permission! Use sudo or su to obtain."
-	exit
-fi
 
 main 2>&1 | tee ${LOG_DIR}/restore_${H}_${T}.log
 

@@ -14,8 +14,10 @@ Usage: xrsync [OPTIONS] SRC [DEST]
                                   2: delete-on real mode
                                   3: non-delete-on test mode
                                   4: non-delete-on real mode
-  -F FILES_FROM                   the list of source-file names from FILE. Put your rsync list file here.
-  -s                              silent mode. Suppress verboss output in console.
+  -F FILES_FROM                   The list of source-file names from FILE.
+                                    Put your rsync list file here.
+  -s                              Silent mode.
+                                    Suppress verboss output in console.
 
 Example:
   1. xrsync -m 2 /etc /media/pax/usb_device/backup
