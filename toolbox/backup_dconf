@@ -24,6 +24,6 @@ else
 fi
 
 cd $D
-tar $V -czpf $F.tar.gz dconf
+tar $V -cpf $F.tar dconf
 rm dconf
 cd - > /dev/null

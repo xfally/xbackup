@@ -34,10 +34,10 @@ tar $V -cpPf $F.tar -T $F2
 # backup list file
 tar $V -rpf $F.tar $F2
 # append tar files to an archive
-tar $V -Af $F.tar.gz $F.tar
+#tar $V -Af $F.tar.gz $F.tar
 # clean
 rm $F2
-rm $F.tar
+#rm $F.tar
 cd - > /dev/null
 
 echo ">>> If you want to backup (preserve) file permissions, use root or sudo to run me."
