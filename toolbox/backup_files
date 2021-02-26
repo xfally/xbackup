@@ -4,12 +4,12 @@
 
 # args
 # $1: target path
-# $2: backup files list
+# $2: list file path
 
 if [[ $# -lt 2 ]]; then
 	echo ">>> Invalid arg! require: ..."
 	echo ">>> arg 1: target path"
-	echo ">>> arg 2: backup files list"
+	echo ">>> arg 2: list file path"
 	exit
 fi
 

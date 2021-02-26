@@ -10,21 +10,19 @@ function usage() {
 	cat <<EOF
 Usage: xrsync [OPTIONS] SRC [DEST]
   OPTIONS:
-  -m MODE                         1: delete-on test mode (default)
+  -m exec Mode                    1: delete-on test mode (default)
                                   2: delete-on real mode
                                   3: non-delete-on test mode
                                   4: non-delete-on real mode
-  -F FILES_FROM                   The list of source-file names from FILE.
-                                    Put your rsync list file here.
-  -s                              Silent mode.
-                                    Suppress verboss output in console.
+  -f List file                    The list file path.
+  -s Silent mode                  Suppress verboss output in console.
 
 Example:
   1. xrsync -m 2 /etc /media/pax/usb_device/backup
      This will synchronize "/etc" and all files under it to one usb device's "backup" dir (created if not exist).
   2. xrsync -m 2 /etc/ /media/pax/usb_device/backup
      This will synchronize all files under "/etc" to one usb device's "backup" dir (created if not exist).
-  3. xrsync -m 2 -F ./data/rsync_files.list / /media/pax/usb_device/backup
+  3. xrsync -m 2 -f ./config/rsync_files.list / /media/pax/usb_device/backup
      This will synchronize all files defined in rsync_files.list (path starts from "/" dir) to one usb device's "backup" dir (created if not exist).
 EOF
 	exit
@@ -43,22 +41,22 @@ cd $P
 # export, so child scripts can get the flag.
 export SILENT_MODE=0
 
-while getopts ":m:F:s" OPTION
+while getopts ":m:f:s" OPTION
 do
 	case $OPTION in
-		m ) mode=$OPTARG;;
-		F ) listfile="$OPTARG";;
+		m ) EXEC_MODE=$OPTARG;;
+		f ) LIST_FILE="$OPTARG";;
 		s ) export SILENT_MODE=1;;
 		* ) usage;;
 	esac
 done
 
-if [ -z "$mode" ]; then
-	mode=1
+if [ -z "$EXEC_MODE" ]; then
+	EXEC_MODE=1
 fi
 
-if [ ! -z "$listfile" ]; then
-	filesfrom="--files-from $listfile"
+if [ ! -z "$LIST_FILE" ]; then
+	filesfrom="--files-from $LIST_FILE"
 fi
 
 if [[ $SILENT_MODE -eq 1 ]]; then
@@ -82,13 +80,13 @@ LOG_DIR="${P}/log"
 mkdir -p ${LOG_DIR}
 
 function main() {
-	if [ "$mode" -eq 1 ]; then
+	if [ "$EXEC_MODE" -eq 1 ]; then
 		xrsync="rsync -rtusL -n --progress --delete"
-	elif [ "$mode" -eq 2 ]; then
+	elif [ "$EXEC_MODE" -eq 2 ]; then
 		xrsync="rsync -rtusL --progress --delete"
-	elif [ "$mode" -eq 3 ]; then
+	elif [ "$EXEC_MODE" -eq 3 ]; then
 		xrsync="rsync -rtusL -n --progress"
-	elif [ "$mode" -eq 4 ]; then
+	elif [ "$EXEC_MODE" -eq 4 ]; then
 		xrsync="rsync -rtusL --progress"
 	else
 		usage
@@ -96,9 +94,9 @@ function main() {
 
 	echo ">>>>>> Begin..."
 
-	echo "### rsync all wanted files in $listfile (under $srcdir) to $dstdir."
+	echo "### rsync all wanted files in $LIST_FILE (under $srcdir) to $dstdir."
 	$xrsync $V $filesfrom $srcdir $dstdir
-	cp -f $listfile $dstdir
+	cp -f $LIST_FILE $dstdir
 
 	echo ">>>>>> All done!"
 }

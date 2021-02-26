@@ -33,6 +33,6 @@ Refer to restore* script for more detail.
 
 Run `xrsync -h` for usage.
 
-If xrsync uses arg `-F`, you can specify one list file. The fomate likes *backup_files.list* above.
+If xrsync uses arg `-f`, you can specify one list file. The format likes *backup_files.list* above.
 
 License: [MIT](https://github.com/xfally/xbackup/blob/master/LICENSE)

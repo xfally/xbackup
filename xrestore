@@ -24,7 +24,7 @@ function usage() {
 	cat <<EOF
 Usage: xrestore [OPTIONS]...
   OPTIONS:
-  -d DATA_DIR               Absolute data dir (default ${P}/data).
+  -d DATA_DIR               Data dir for backup (default ${P}/data).
                               Put the files you want to restore here at first.
 EOF
 	exit
